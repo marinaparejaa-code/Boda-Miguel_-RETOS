@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retos Nupciales | Laura & Miguel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4ef;
+      --card-bg: #ffffff;
+      --primary: #1e293b;
+      --gold: #b38b4d;
+      --gold-dark: #8c6a34;
+      --gold-soft: #fcf9f2;
+      --text: #475569;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 460px;
+      margin: auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+      padding: 30px 22px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .badge-top {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--gold-dark);
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.45rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .subtitulo {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    select {
+      width: 100%;
+      padding: 13px 15px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      font-size: 0.95rem;
+      color: var(--primary);
+      background-color: #fafaf9;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    select:focus {
+      border-color: var(--gold);
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(179, 139, 77, 0.15);
+    }
+
+    .badge-cat {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin: 16px 0 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-pinza { background: #fef3c7; color: #92400e; }
+    .badge-video { background: #e0f2fe; color: #075985; }
+    .badge-vip { background: #dcfce7; color: #166534; }
+    .badge-infantil { background: #fee2e2; color: #991b1b; }
+
+    .reto-result {
+      display: none;
+      margin-top: 18px;
+      padding: 22px 18px;
+      background: var(--gold-soft);
+      border-radius: 16px;
+      border: 1.5px dashed var(--gold);
+      animation: fadeIn 0.35s ease;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reto-nombre-invitado {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #78716c;
+      margin-bottom: 4px;
+    }
+
+    .reto-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+      margin-bottom: 10px;
+    }
+
+    .reto-desc {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--primary);
+    }
+
+    .footer {
+      margin-top: 22px;
+      font-size: 0.72rem;
+      color: #94a3b8;
+      text-align: center;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      <span class="badge-top">Pasaporte Viajero</span>
+      <h1>Laura & Miguel</h1>
+      <p class="subtitulo">Selecciona tu mesa y tu nombre para descubrir tu misión de hoy.</p>
+
+      <!-- PASO 1: Elegir Mesa -->
+      <div class="form-group">
+        <label for="mesa-select">1. ¿En qué mesa estás?</label>
+        <select id="mesa-select">
+          <option value="">-- Elige mesa y país --</option>
+        </select>
+      </div>
+
+      <!-- PASO 2: Elegir Persona -->
+      <div class="form-group" id="persona-wrapper" style="display: none;">
+        <label for="persona-select">2. ¿Quién eres?</label>
+        <select id="persona-select">
+          <option value="">-- Selecciona tu nombre --</option>
+        </select>
+      </div>
+
+      <!-- Etiqueta de Categoría de la Mesa -->
+      <div id="cat-pill"></div>
+
+      <!-- PASO 3: Misión Asignada -->
+      <div class="reto-result" id="reto-box">
+        <div class="reto-nombre-invitado" id="reto-nombre"></div>
+        <h2 class="reto-title" id="reto-titulo"></h2>
+        <p class="reto-desc" id="reto-cuerpo"></p>
+      </div>
+    </div>
+    <div class="footer">Boda Laura & Miguel • 200 Invitados</div>
+  </div>
+
+  <script>
+    const datosMesas = {
+      1: {
+        etiqueta: "Mesa 1: Japón (Mesa Presidencial)",
+        categoria: "MESA PRESIDENCIAL (PASE VIP)",
+        tipo: "vip",
+        personas: [
+          { nombre: "Laura", titulo: "Pase VIP Presidencial", reto: "Exenta de retos para disfrutar del banquete y atender a los invitados." },
+          { nombre: "Miguel", titulo: "Pase VIP Presidencial", reto: "Exento de retos para disfrutar del banquete y atender a los invitados." },
+          { nombre: "Padre de la Novia", titulo: "Pase VIP Presidencial", reto: "Acompañar a los novios en los momentos de protocolo y brindis." },
+          { nombre: "Madre de la Novia", titulo: "Pase VIP Presidencial", reto: "Acompañar a los novios en los momentos de protocolo y brindis." },
+          { nombre: "Padre del Novio", titulo: "Pase VIP Presidencial", reto: "Acompañar a los novios en los momentos de protocolo y brindis." },
+          { nombre: "Madre del Novio", titulo: "Pase VIP Presidencial", reto: "Acompañar a los novios en los momentos de protocolo y brindis." }
+        ]
+      },
+      2: {
+        etiqueta: "Mesa 2: Madrid (España)",
+        categoria: "OPERACIÓN PINZA SECRETA",
+        tipo: "pinza",
+        personas: [
+          { nombre: "Celia Salamanca", titulo: "El Plato Más Delicioso", reto: "Poneos de acuerdo en la mesa para elegir el plato más rico y hazle una foto rápida cuando lo sirvan." },
+          { nombre: "Juan Javier Bordería Pi", titulo: "La Pinza Secreta de Madrid", reto: "Engancha disimuladamente una pinza de madera con el nombre de tu mesa a alguien de otra mesa." },
+          { nombre: "Carlos Cortizo", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Lucía Herrera", titulo: "Sabiduría de Vida", reto: "Pregunta a la persona de más experiencia de tu mesa su secreto de oro para mantener el amor alegre." },
+          { nombre: "Bego Barrio", titulo: "Chulapo Nupcial", reto: "Guía a tu mesa para hacer un viva castizo por Madrid justo tras el primer brindis." },
+          { nombre: "Bego Martín", titulo: "La Anécdota Viajera", reto: "Pregunta a tus compañeros cuál ha sido el viaje o escapada más disparatada de su vida." },
+          { nombre: "Andrea San Juan", titulo: "El Rey del Brindis", reto: "Consigue que tu mesa proponga más brindis a lo alto que cualquier otra durante la comida." },
+          { nombre: "Odalys Tacuri", titulo: "Pista Conectada", reto: "Inaugura la pista de baile invitando a bailar a alguien de una mesa que no conocías." },
+          { nombre: "Marina Pareja", titulo: "El Súper Selfie Viajero", reto: "Hazte un selfie divertido donde se vean de fondo las distintas mesas del salón celebrando." },
+          { nombre: "Ana Díez", titulo: "La Ola Transcontinental", reto: "Inicia una ola levantando los brazos en tu mesa hasta contagiar a las mesas vecinas." },
+          { nombre: "Sofia Cristina Hernández", titulo: "Cazador de Raradas", reto: "Localiza el accesorio o tocado más inusual de la boda y sácale una foto exprés." }
+        ]
+      },
+      3: {
+        etiqueta: "Mesa 3: Segovia (España)",
+        categoria: "RETO VÍDEO (2 MIN)",
+        tipo: "video",
+        personas: [
+          { nombre: "Fernando Muñoz", titulo: "Mensaje del Aniversario (Vídeo 2 min)", reto: "Graba a 3 personas de tu mesa dando un consejo para el 1er aniversario de los novios." },
+          { nombre: "Yolanda Juarranz Sánchez", titulo: "El Brindis del Acueducto", reto: "Organiza a tu mesa para hacer un brindis firme y monumental en honor a Segovia." },
+          { nombre: "Carlos Valdeolmillos Díaz", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Andrés Muñoz Valdeolmillos", titulo: "Selfie en el Espejo del Baño", reto: "Ve al baño con al menos 2 personas de tu mesa y haceos una foto divertida en el espejo." },
+          { nombre: "Patricia Vázquez Fernández", titulo: "La Anécdota Viajera", reto: "Cuéntale a tu mesa cuál ha sido el momento más gracioso que has vivido en una boda." },
+          { nombre: "Loli Valdeolmillos Díaz", titulo: "El Rey del Brindis", reto: "Anima a tu mesa a levantar las copas en cada momento especial de la celebración." }
+        ]
+      },
+      4: {
+        etiqueta: "Mesa 4: Murcia (España)",
+        categoria: "RETO VÍDEO (2 MIN)",
+        tipo: "video",
+        personas: [
+          { nombre: "Alberto Betrán", titulo: "Cineasta Viajero (Vídeo 2 min)", reto: "Haz un breve vídeo de 2 min mostrando el ambiente alegre de la comida y la mesa." },
+          { nombre: "María Morte", titulo: "Sabiduría de Vida", reto: "Averigua en tu mesa quién lleva más años de casado y pídele su mejor recomendación." },
+          { nombre: "Adelardo Morte", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Teresa Morte", titulo: "Salud de la Huerta", reto: "Guía a la mesa para proponer un alegre grito de alegría tras el plato principal." },
+          { nombre: "Joaquin Molina", titulo: "El Rey del Brindis", reto: "Mantén la energía alta proponiendo brindis espontáneos." },
+          { nombre: "Carmen Morte", titulo: "Pista Conectada", reto: "Anima a tus compañeros a salir a darlo todo en la pista de baile." },
+          { nombre: "Javier Aguilar", titulo: "El Plato Más Delicioso", reto: "Sacad una foto bonita al plato mejor presentado de la mesa." }
+        ]
+      },
+      5: {
+        etiqueta: "Mesa 5: Jaén (España)",
+        categoria: "RETO VÍDEO (2 MIN)",
+        tipo: "video",
+        personas: [
+          { nombre: "Gabriel González", titulo: "Cápsula del Tiempo (Vídeo 2 min)", reto: "Graba una predicción divertida en vídeo sobre dónde estarán los novios en 5 años." },
+          { nombre: "Almudena Redondo", titulo: "Brindis del Olivar", reto: "Lidera a tu mesa para brindar por la prosperidad y felicidad eterna de los novios." },
+          { nombre: "Luis Gómez", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Mª Carmen Varea", titulo: "Sabiduría de Vida", reto: "Pregunta en tu mesa cuál es el ingrediente principal de un matrimonio feliz." },
+          { nombre: "Ángeles Rodríguez", titulo: "El Rey del Brindis", reto: "Invita a toda la mesa a alzar las copas cada vez que se escuche una ovación." },
+          { nombre: "Pedro González", titulo: "Pista Conectada", reto: "Invita a alguien de otra mesa a bailar tu canción favorita." },
+          { nombre: "Mar Izquierdo", titulo: "Cazador de Raradas", reto: "Captura con la cámara la corbata, pajarita o complemento más original." }
+        ]
+      },
+      6: {
+        etiqueta: "Mesa 6: Tortuguero (Costa Rica)",
+        categoria: "RETO VÍDEO (2 MIN)",
+        tipo: "video",
+        personas: [
+          { nombre: "María Valdeolmillos", titulo: "Vídeo ¡Pura Vida! (Vídeo 2 min)", reto: "Graba a tus compañeros enviando un saludo lleno de energía caribeña a Laura y Miguel." },
+          { nombre: "Patricia Guerra", titulo: "Grito de Pura Vida", reto: "Dirige a tu mesa para exclamar un entusiasta ¡Pura Vida! en el brindis central." },
+          { nombre: "Julio Valdeolmillos", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "María Guerra", titulo: "Selfie en el Espejo del Baño", reto: "Reúne a 2 amigas/os e id al baño a sacaros una foto risueña frente al espejo." },
+          { nombre: "Marta Valdeolmillos", titulo: "La Anécdota Viajera", reto: "Pregunta a la mesa cuál es el destino tropical al que más desearían viajar." },
+          { nombre: "Laura Guerra", titulo: "El Rey del Brindis", reto: "Contagia las ganas de celebrar proponiendo brindis constantes." },
+          { nombre: "Cristina González", titulo: "Pista Conectada", reto: "Anima a tu mesa a unirse al baile grupal en cuanto empiece la fiesta." },
+          { nombre: "Teresa Redondo", titulo: "El Plato Más Delicioso", reto: "Elige con tu mesa el postre o plato más rico para fotografiarlo." },
+          { nombre: "Lucía González", titulo: "Sabiduría de Vida", reto: "Pide un consejo rápido de vida amorosa al comensal más mayor de tu mesa." },
+          { nombre: "Elena Redondo", titulo: "La Ola Transcontinental", reto: "Une los brazos de tu mesa para dar continuidad a la ola humana del salón." }
+        ]
+      },
+      7: {
+        etiqueta: "Mesa 7: Dublín (Irlanda)",
+        categoria: "OPERACIÓN PINZA SECRETA",
+        tipo: "pinza",
+        personas: [
+          { nombre: "Gabriel Valdeolmillos", titulo: "El Plato Más Delicioso", reto: "Elige con tu mesa el plato mejor presentado y hazle una foto rápida." },
+          { nombre: "Javier Herrera (Pinza)", titulo: "La Pinza Secreta de Dublín", reto: "Coloca disimuladamente una pinza de madera firmada por Dublín a un invitado de otra mesa." },
+          { nombre: "Javier Herrera (Capitán)", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Elena Herrera", titulo: "Sabiduría de Vida", reto: "Pregunta a tus compañeros qué valores consideran imprescindibles en una pareja." },
+          { nombre: "Fernando Herrera", titulo: "Brindis Gaélico (Sláinte!)", reto: "Lidera a tu mesa para gritar ¡Sláinte! alzando las copas tras el primer plato." },
+          { nombre: "Álvaro Herrera", titulo: "La Anécdota Viajera", reto: "Averigua cuál ha sido la anécdota más graciosa que le ha ocurrido a alguien de tu mesa viajando." },
+          { nombre: "Manuel Seral", titulo: "El Rey del Brindis", reto: "Sé el primero en alzar la copa cada vez que la mesa de los novios celebre." },
+          { nombre: "Belén Seral", titulo: "Pista Conectada", reto: "Saca a bailar a la pista a alguien que vista un color verde o llamativo." },
+          { nombre: "José María Seral", titulo: "El Súper Selfie Viajero", reto: "Toma un selfie panorámico abarcando la alegría de tu mesa y las vecinas." },
+          { nombre: "Beatriz Seral", titulo: "Cazador de Raradas", reto: "Encuentra un detalle decorativo o vestimenta curiosa y toma una captura rápida." }
+        ]
+      },
+      8: {
+        etiqueta: "Mesa 8: Verona (Italia)",
+        categoria: "OPERACIÓN PINZA SECRETA",
+        tipo: "pinza",
+        personas: [
+          { nombre: "Sham Calvo", titulo: "El Plato Más Delicioso", reto: "Acordad cuál es el plato estrella del banquete y tomadle una foto." },
+          { nombre: "Nuria Juarranz", titulo: "La Pinza Secreta de Verona", reto: "Pon disimuladamente una pinza de madera de Verona a una persona de otra mesa." },
+          { nombre: "Pablo Juarranz", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Jesús Juarranz", titulo: "Sabiduría de Vida", reto: "Pregunta a la pareja de más años en la mesa el secreto para resolver discusiones con amor." },
+          { nombre: "María Juarranz", titulo: "Brindis de Romeo y Julieta", reto: "Invita a tu mesa a hacer un brindis romántico por el amor eterno de Laura y Miguel." },
+          { nombre: "Paloma Juarranz", titulo: "La Anécdota Viajera", reto: "Comparte y escucha en la mesa la historia de amor más bonita que conozcáis." },
+          { nombre: "Jesús Manuel Calvo", titulo: "El Rey del Brindis", reto: "Anima a la mesa a brindar fuerte en cada centro de atención del banquete." },
+          { nombre: "Marta Juarranz", titulo: "Pista Conectada", reto: "Invita a bailar una canción lenta o animada con un invitado de otra mesa." },
+          { nombre: "Pedro Juarranz", titulo: "Cazador de Raradas", reto: "Busca el peinado o accesorio más elaborado y fotografíalo." },
+          { nombre: "Juan Antonio Juarranz", titulo: "La Ola Transcontinental", reto: "Levanta los brazos para que la ola pase con entusiasmo por Verona." },
+          { nombre: "Sofía Juarranz", titulo: "Selfie en el Espejo del Baño", reto: "Haz una escapada al baño con 2 acompañantes para retrataros en el espejo." }
+        ]
+      },
+      9: {
+        etiqueta: "Mesa 9: Santiago (Chile / Galicia)",
+        categoria: "OPERACIÓN PINZA SECRETA",
+        tipo: "pinza",
+        personas: [
+          { nombre: "Armando Guerra", titulo: "El Plato Más Delicioso", reto: "Fotografiad la mejor presentación gastronómica de la comida." },
+          { nombre: "Teresa Redondo", titulo: "La Pinza Secreta de Santiago", reto: "Coloca la pinza de madera de tu mesa a alguien distraído de otra mesa." },
+          { nombre: "Mariluz Guerra", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Alfonso Valdeolmillos", titulo: "Sabiduría de Vida", reto: "Pide al comensal con más experiencia un consejo sobre cómo mantener la chispa." },
+          { nombre: "Mariluz Valdeolmillos", titulo: "Brindis del Caminante", reto: "Organiza a tu mesa para brindar por los nuevos caminos que emprenden los novios." },
+          { nombre: "Alfonso Guerra", titulo: "La Anécdota Viajera", reto: "Cuéntale a la mesa cuál ha sido tu ruta o viaje favorito." },
+          { nombre: "Gabriel Guerra", titulo: "El Rey del Brindis", reto: "Encabeza los brindis de tu mesa cada vez que pasen los novios cerca." },
+          { nombre: "Marta Guerra", titulo: "Pista Conectada", reto: "Sé de las primeras personas en llenar la pista de baile." },
+          { nombre: "Ignacio Guerra", titulo: "Cazador de Raradas", reto: "Localiza el objeto o zapato más original y tomadle una foto." },
+          { nombre: "Lucía Guerra", titulo: "La Ola Transcontinental", reto: "Sigue el ritmo de la ola levantando los brazos en vuestra mesa." }
+        ]
+      },
+      10: {
+        etiqueta: "Mesa 10: Bassano (Italia)",
+        categoria: "RETO VÍDEO (2 MIN)",
+        tipo: "video",
+        personas: [
+          { nombre: "María Jesús Redondo", titulo: "Videoclip Exprés (Vídeo 2 min)", reto: "Graba a tu mesa cantando o tarareando un estribillo famoso durante 2 minutos." },
+          { nombre: "Enrique Redondo", titulo: "Brindis del Alpino", reto: "Anima a la mesa a brindar con energía al estilo de las montañas italianas." },
+          { nombre: "Antonio Cortizo", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Paloma Redondo", titulo: "Sabiduría de Vida", reto: "Pregunta en la mesa cuál es la frase más bonita para dedicar a unos recién casados." },
+          { nombre: "Javier Redondo", titulo: "El Rey del Brindis", reto: "Alza tu copa alto en cada momento de aplausos." },
+          { nombre: "Inmaculada Redondo", titulo: "Pista Conectada", reto: "Anima a tus comensales a salir a bailar." },
+          { nombre: "Fernando Redondo", titulo: "El Plato Más Delicioso", reto: "Toma una foto rápida al plato que consideréis más rico." }
+        ]
+      },
+      11: {
+        etiqueta: "Mesa 11: Venecia (Italia)",
+        categoria: "OPERACIÓN PINZA SECRETA",
+        tipo: "pinza",
+        personas: [
+          { nombre: "Roberto Pelosi", titulo: "El Plato Más Delicioso", reto: "Sacad una foto preciosa al plato estrella de Venecia." },
+          { nombre: "Maria Vittoria Pelosi", titulo: "La Pinza Secreta de Venecia", reto: "Engancha con disimulo la pinza de madera veneciana a un invitado de otra mesa." },
+          { nombre: "Marco Pelosi", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Giulia Pelosi", titulo: "Sabiduría de Vida", reto: "Pregunta a la persona con más vivencias amorosas su secreto para la felicidad." },
+          { nombre: "Matteo Pelosi", titulo: "Mamma Mia! y el Gesto Italiano", reto: "Lidera a tu mesa para hacer el gesto típico de la mano gritando ¡Mamma Mia! en el brindis." },
+          { nombre: "Francesca Pelosi", titulo: "La Anécdota Viajera", reto: "Comparte con la mesa cuál ha sido vuestro rincón italiano o viajero favorito." }
+        ]
+      },
+      12: {
+        etiqueta: "Mesa 12: Bordeaux (Francia)",
+        categoria: "OPERACIÓN PINZA SECRETA",
+        tipo: "pinza",
+        personas: [
+          { nombre: "Jean-Luc Dupont", titulo: "El Plato Más Delicioso", reto: "Tomad una foto gastronómica al plato mejor presentado del banquete." },
+          { nombre: "Marie Dupont", titulo: "La Pinza Secreta de Bordeaux", reto: "Engancha disimuladamente la pinza de madera de Bordeaux a alguien de otra mesa." },
+          { nombre: "Bertrand", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Claire Martin", titulo: "Sabiduría de Vida", reto: "Pide a tus comensales un consejo clave sobre la paciencia y el cariño en pareja." },
+          { nombre: "Pierre Martin", titulo: "El Gran Sommelier", reto: "Lidera a tu mesa para hacer un brindis elegante diciendo ¡Santé! al alzar las copas." },
+          { nombre: "Sophie Bernard", titulo: "La Anécdota Viajera", reto: "Pregunta a la mesa cuál ha sido su experiencia gourmet o viaje preferido." },
+          { nombre: "Antoine Bernard", titulo: "El Rey del Brindis", reto: "Sé el motor de la mesa proponiendo brindis constantes." },
+          { nombre: "Chantal Petit", titulo: "Pista Conectada", reto: "Invita a alguien de otra mesa a bailar en la pista." },
+          { nombre: "Michel Petit", titulo: "El Súper Selfie Viajero", reto: "Hazte un selfie divertido donde se aprecie la fiesta del salón." },
+          { nombre: "Isabelle Moreau", titulo: "La Ola Transcontinental", reto: "Levanta los brazos en la ola impulsando la energía de Bordeaux." }
+        ]
+      },
+      13: {
+        etiqueta: "Mesa 13: Barcelona (España)",
+        categoria: "OPERACIÓN PINZA SECRETA",
+        tipo: "pinza",
+        personas: [
+          { nombre: "Jorge Aguado", titulo: "El Plato Más Delicioso", reto: "Sacad una foto compartida al plato que más os haya gustado." },
+          { nombre: "Ana Belén Cortizo", titulo: "La Pinza Secreta de Barcelona", reto: "Pon disimuladamente la pinza de madera a un invitado de otra mesa." },
+          { nombre: "Marc", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Mireia", titulo: "Sabiduría de Vida", reto: "Pregunta a tus compañeros qué es lo más importante para cuidar el amor a diario." },
+          { nombre: "Pau", titulo: "Visca els Nuvis!", reto: "Encabeza a tu mesa para gritar un alegre ¡Visca els Nuvis! durante el brindis principal." },
+          { nombre: "Laia", titulo: "La Anécdota Viajera", reto: "Pregunta en tu mesa cuál ha sido su escapada de fin de semana más bonita." },
+          { nombre: "Jordi", titulo: "El Rey del Brindis", reto: "Anima a la mesa a levantar las copas cada vez que haya música de celebración." },
+          { nombre: "Núria", titulo: "Selfie en el Espejo del Baño", reto: "Reúne a 2 acompañantes para haceros una foto graciosa en el espejo del baño." }
+        ]
+      },
+      14: {
+        etiqueta: "Mesa 14: Roma (Italia)",
+        categoria: "OPERACIÓN PINZA SECRETA",
+        tipo: "pinza",
+        personas: [
+          { nombre: "Paolo Zaggia", titulo: "El Plato Más Delicioso", reto: "Tomad una foto rápida al plato mejor presentado de la mesa." },
+          { nombre: "Alessandra Rossi", titulo: "La Pinza Secreta de Roma", reto: "Coloca disimuladamente la pinza romana en la ropa de alguien de otra mesa." },
+          { nombre: "Massimo", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Francesca Bianchi", titulo: "Sabiduría de Vida", reto: "Pregunta a la persona de más experiencia el secreto romano para un amor eterno." },
+          { nombre: "Matteo Ferrari", titulo: "El Saludo del César", reto: "Dirige a tu mesa para hacer un saludo eufórico de copa en alto diciendo ¡Viva gli sposi!." },
+          { nombre: "Chiara Esposito", titulo: "La Anécdota Viajera", reto: "Pregunta a tus compañeros qué monumento del mundo les ha impresionado más." },
+          { nombre: "Lorenzo Ricci", titulo: "El Rey del Brindis", reto: "Mantén la mesa activa en los brindis generales." },
+          { nombre: "Elena Marino", titulo: "Pista Conectada", reto: "Baila un tema con un invitado de una mesa vecina." },
+          { nombre: "Davide Greco", titulo: "Cazador de Raradas", reto: "Encuentra el accesorio más llamativo del banquete y fotografíalo." },
+          { nombre: "Giorgia Bruno", titulo: "La Ola Transcontinental", reto: "Levanta los brazos con energía al pasar la ola por Roma." }
+        ]
+      },
+      15: {
+        etiqueta: "Mesa 15: Torino (Italia)",
+        categoria: "RETO VÍDEO (2 MIN)",
+        tipo: "video",
+        personas: [
+          { nombre: "Paloma Valadés", titulo: "Vídeo Entrevista de Bodas (Vídeo 2 min)", reto: "Haz una breve entrevista en vídeo de 2 min a tu mesa sobre la boda." },
+          { nombre: "Stefano Pelosi", titulo: "Brindis de Elegancia", reto: "Haz un brindis por la complicidad y elegancia de los novios." },
+          { nombre: "Andrea Pelosi", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Silvia Pelosi", titulo: "Sabiduría de Vida", reto: "Averigua en la mesa cuál es el mejor consejo para superar cualquier reto juntos." },
+          { nombre: "Luca Pelosi", titulo: "El Rey del Brindis", reto: "Propón brindis entusiastas a lo largo de la comida." },
+          { nombre: "Elena Pelosi", titulo: "Pista Conectada", reto: "Anima a la mesa a bailar en cuanto arranque la fiesta." },
+          { nombre: "Marco Pelosi Jr.", titulo: "El Plato Más Delicioso", reto: "Sacad una foto al plato que más os haya gustado." },
+          { nombre: "Sofia Pelosi", titulo: "Cazador de Raradas", reto: "Busca el complemento más original de la boda y fotografíalo." },
+          { nombre: "Matteo Pelosi Jr.", titulo: "La Ola Transcontinental", reto: "Levanta los brazos impulsando la ola en tu mesa." },
+          { nombre: "Valentina Pelosi", titulo: "Selfie en el Espejo del Baño", reto: "Reúne a 2 acompañantes para una foto divertida en el espejo del baño." }
+        ]
+      },
+      16: {
+        etiqueta: "Mesa 16: Biarritz (Francia)",
+        categoria: "OPERACIÓN PINZA SECRETA",
+        tipo: "pinza",
+        personas: [
+          { nombre: "Margarita Remacha", titulo: "El Plato Más Delicioso", reto: "Elige el plato más rico de tu mesa y tomadle una foto bonita." },
+          { nombre: "Jean-Christophe", titulo: "La Pinza Secreta de Biarritz", reto: "Engancha la pinza de madera de Biarritz a una persona de otra mesa." },
+          { nombre: "Philippe", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Véronique", titulo: "Sabiduría de Vida", reto: "Pregunta a la persona con más experiencia cuál es el secreto de la felicidad duradera." },
+          { nombre: "Laurent", titulo: "Brindis Atlántico", reto: "Dirige a tu mesa para brindar con entusiasmo marinero por Laura y Miguel." },
+          { nombre: "Anne", titulo: "La Anécdota Viajera", reto: "Pregunta en la mesa cuál es su playa o costa favorita del mundo." },
+          { nombre: "Nicolas", titulo: "El Rey del Brindis", reto: "Mantén la copa lista para brindar en cada celebración." },
+          { nombre: "Catherine", titulo: "Pista Conectada", reto: "Saca a bailar a alguien de una mesa cercana." },
+          { nombre: "Pascal", titulo: "El Súper Selfie Viajero", reto: "Saca un selfie panorámico donde se vea el ambiente festivo del banquete." },
+          { nombre: "Nathalie", titulo: "La Ola Transcontinental", reto: "Une a la mesa para levantar los brazos en la ola humana." }
+        ]
+      },
+      17: {
+        etiqueta: "Mesa 17: Lisboa (Portugal)",
+        categoria: "OPERACIÓN PINZA SECRETA",
+        tipo: "pinza",
+        personas: [
+          { nombre: "Jesús Sastre", titulo: "El Plato Más Delicioso", reto: "Tomad una foto rápida al plato mejor presentado del banquete." },
+          { nombre: "María José Cortizo", titulo: "La Pinza Secreta de Lisboa", reto: "Coloca disimuladamente la pinza portuguesa a alguien de otra mesa." },
+          { nombre: "Joao", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Ana Silva", titulo: "Sabiduría de Vida", reto: "Pide a tus comensales un consejo para mantener siempre la alegría en el hogar." },
+          { nombre: "Tiago Silva", titulo: "Brindis de la Saudade Alegre", reto: "Lidera un brindis emotivo y festivo deseando amor eterno a los novios." },
+          { nombre: "Inés Silva", titulo: "La Anécdota Viajera", reto: "Pregunta a la mesa cuál es la ciudad con más encanto que han visitado." },
+          { nombre: "Rui Silva", titulo: "El Rey del Brindis", reto: "Anima a la mesa a alzar sus copas en cada ovación." }
+        ]
+      },
+      18: {
+        etiqueta: "Mesa 18: Ámsterdam (Países Bajos)",
+        categoria: "RETO VÍDEO (2 MIN)",
+        tipo: "video",
+        personas: [
+          { nombre: "Álvaro Almela", titulo: "Vídeo Diario de a Bordo (Vídeo 2 min)", reto: "Graba un simpático vídeo de 2 minutos mostrando los mejores momentos de la sobremesa." },
+          { nombre: "Beatriz Cortizo", titulo: "Brindis de los Canales", reto: "Organiza un brindis de mesa lleno de frescura y buenos deseos." },
+          { nombre: "Jan", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Anouk", titulo: "Sabiduría de Vida", reto: "Pregunta a tus comensales qué detalle romántico no debería faltar nunca." },
+          { nombre: "Lars", titulo: "El Rey del Brindis", reto: "Haz sonar las copas en cada momento especial de la comida." },
+          { nombre: "Fleur", titulo: "Pista Conectada", reto: "Invita a bailar a la pista a alguien que lleve un accesorio divertido." },
+          { nombre: "Daan", titulo: "El Plato Más Delicioso", reto: "Haz una foto bonita al plato gastronómico que más os guste." },
+          { nombre: "Sanne", titulo: "Cazador de Raradas", reto: "Encuentra el detalle más curioso de la boda y fotografíalo." },
+          { nombre: "Sem", titulo: "La Ola Transcontinental", reto: "Levanta los brazos en tu mesa cuando pase la ola del salón." },
+          { nombre: "Lieke", titulo: "Selfie en el Espejo del Baño", reto: "Ve al baño con 2 comensales y sacaos un divertido selfie en el espejo." }
+        ]
+      },
+      19: {
+        etiqueta: "Mesa 19: Ávila (España)",
+        categoria: "RETO VÍDEO (2 MIN)",
+        tipo: "video",
+        personas: [
+          { nombre: "Joaquín Ruiz de Infante", titulo: "Vídeo Brindis Grabado (Vídeo 2 min)", reto: "Registra en vídeo de 2 min un emotivo brindis conjunto de toda tu mesa." },
+          { nombre: "Mª Luisa Cortizo", titulo: "Brindis Murallado", reto: "Lidera un brindis fuerte y unido protegiendo el amor de los novios." },
+          { nombre: "Felipe", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Teresa", titulo: "Sabiduría de Vida", reto: "Averigua en la mesa cuál es el mejor consejo para viajar juntos toda la vida." },
+          { nombre: "Gonzalo", titulo: "El Rey del Brindis", reto: "Anima a levantar las copas en cada intervención." },
+          { nombre: "Pilar", titulo: "Pista Conectada", reto: "Anima a tu mesa a ser la primera en inaugurar la pista de baile." },
+          { nombre: "Ignacio", titulo: "El Plato Más Delicioso", reto: "Sacad una foto compartida al plato más rico de la comida." },
+          { nombre: "Carmen", titulo: "Cazador de Raradas", reto: "Localiza el calzado o atuendo más llamativo y fotografíalo." }
+        ]
+      },
+      20: {
+        etiqueta: "Mesa 20: Lugo (España)",
+        categoria: "RETO VÍDEO (2 MIN)",
+        tipo: "video",
+        personas: [
+          { nombre: "María García", titulo: "Crónica de la Boda (Vídeo 2 min)", reto: "Graba a 3 comensales expresando sus deseos para los novios en un vídeo de 2 min." },
+          { nombre: "José Luis Vázquez", titulo: "Brindis Galego (Aturuxo Nupcial)", reto: "Dirige a la mesa para dar un grito de alegría (aturuxo) brindando por Laura y Miguel." },
+          { nombre: "Santiago", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Lucía Vázquez", titulo: "Sabiduría de Vida", reto: "Pregunta a la persona con más vivencias su secreto para un amor duradero." },
+          { nombre: "David García", titulo: "El Rey del Brindis", reto: "Haz que la mesa mantenga las copas en alto en cada celebración." },
+          { nombre: "Ana Vázquez", titulo: "Pista Conectada", reto: "Anima a tus compañeros de mesa a bailar las canciones más animadas." }
+        ]
+      },
+      21: {
+        etiqueta: "Mesa 21: Tenerife (España)",
+        categoria: "RETO VÍDEO (2 MIN)",
+        tipo: "video",
+        personas: [
+          { nombre: "Ana Bermejo", titulo: "Vídeo Saludo Tropical (Vídeo 2 min)", reto: "Graba a tu mesa enviando un cálido y tropical saludo en vídeo de 2 min." },
+          { nombre: "Juan José Izquierdo", titulo: "Brindis del Teide", reto: "Organiza un brindis por todo lo alto deseando un amor tan gigante como el Teide." },
+          { nombre: "Yeray", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Alberto Romero", titulo: "La Anécdota Viajera", reto: "Averigua qué isla o paraje paradisíaco le gustaría visitar a cada comensal." },
+          { nombre: "Asunción Carrasco", titulo: "El Rey del Brindis", reto: "Alza tu copa y anima a la mesa a brindar con energía." },
+          { nombre: "Paco Alfaro", titulo: "Pista Conectada", reto: "Sé el motor de tu mesa en la pista de baile." },
+          { nombre: "Inés Hernández", titulo: "El Súper Selfie Viajero", reto: "Tómate un selfie divertido donde se aprecie la fiesta del salón." },
+          { nombre: "Chema Seral Crespo", titulo: "El Plato Más Delicioso", reto: "Fotografiad el plato de comida que más os haya gustado." },
+          { nombre: "María José Iglesias", titulo: "Sabiduría de Vida", reto: "Pide a la persona más sabia de la mesa un consejo para el matrimonio." },
+          { nombre: "Javier Labrés", titulo: "La Ola Transcontinental", reto: "Levanta los brazos con tu mesa para dar continuidad a la ola." }
+        ]
+      },
+      22: {
+        etiqueta: "Mesa 22: Bruxelles (Bélgica)",
+        categoria: "RETO VÍDEO (2 MIN)",
+        tipo: "video",
+        personas: [
+          { nombre: "Rosanna Pelosi", titulo: "Vídeo Mensaje de la Mesa (Vídeo 2 min)", reto: "Graba un simpático vídeo de 2 minutos reuniendo los mejores deseos de la mesa." },
+          { nombre: "Margherita Rosada", titulo: "Brindis de la Unión Europea", reto: "Haz un brindis internacional deseando armonía y felicidad a los novios." },
+          { nombre: "Lukas", titulo: "Capitán / Coordinador de Vuelo", reto: "Animar el ambiente de la mesa, coordinar los brindis, motivar a cumplir las misiones y ayudar a los compañeros." },
+          { nombre: "Roberta Negriolli", titulo: "Selfie en el Espejo del Baño", reto: "Ve al baño con 2 comensales y sacaos un divertido selfie en el espejo." },
+          { nombre: "Andrés Contreras", titulo: "La Anécdota Viajera", reto: "Pregunta a la mesa sobre su postre o dulce favorito." },
+          { nombre: "Cristina López", titulo: "El Rey del Brindis", reto: "Mantén las copas en alto en cada brindis de la comida." },
+          { nombre: "Eugenio Delfino", titulo: "Pista Conectada", reto: "Saca a bailar a alguien de una mesa cercana." },
+          { nombre: "Marta Pedrajas", titulo: "El Plato Más Delicioso", reto: "Sacad una foto bonita al plato mejor presentado de la mesa." },
+          { nombre: "Isabel de Oñate", titulo: "Cazador de Raradas", reto: "Encuentra el accesorio o tocado más simpático y fotografíalo." },
+          { nombre: "Esteban Alcalde", titulo: "La Ola Transcontinental", reto: "Lidera la ola levantando los brazos cuando pase por vuestra mesa." }
+        ]
+      },
+      23: {
+        etiqueta: "Mesa 23: Fátima (Portugal - Mesa Infantil)",
+        categoria: "MESA INFANTIL (RETOS ADAPTADOS)",
+        tipo: "infantil",
+        personas: [
+          { nombre: "Irene Betrán", titulo: "El Dibujo Viajero", reto: "Haz un dibujo superchulo en tu servilleta sobre tu viaje soñado y enséñaselo a tus compañeros." },
+          { nombre: "Nadia Betrán", titulo: "El Abrazo de Equipo", reto: "Junta a tus amigos de la mesa y dad un gran abrazo en grupo para celebrar el día de los novios." },
+          { nombre: "Julia Muñoz", titulo: "Guardián de la Alegría Infantil", reto: "Animar los juegos de los peques, asegurarse de que todos lo pasen bien y organizar los aplausos." },
+          { nombre: "Tadeo Galiano", titulo: "El Saludo Secreto", reto: "Localiza a los novios (Laura y Miguel) desde tu sitio y hazles un saludo divertido con la mano." },
+          { nombre: "Belén González", titulo: "La Foto Risueña", reto: "Haz tu mejor mueca graciosa frente a la cámara cuando os saquéis una foto en la mesa." },
+          { nombre: "Raquel Galiano", titulo: "Superestrella del Baile", reto: "Demuestra tu mejor pase de baile infantil cuando empiece la música en la pista." },
+          { nombre: "Santiago González", titulo: "Superestrella del Baile", reto: "Baila de forma divertida y contagia tu energía a tus compañeros de mesa." },
+          { nombre: "Daniel González", titulo: "Superestrella del Baile", reto: "Baila de forma divertida y contagia tu energía a tus compañeros de mesa." },
+          { nombre: "Lucía Merino Carbón", titulo: "Superestrella del Baile", reto: "Baila de forma divertida y contagia tu energía a tus compañeros de mesa." },
+          { nombre: "Juan González", titulo: "Superestrella del Baile", reto: "Baila de forma divertida y contagia tu energía a tus compañeros de mesa." }
+        ]
+      }
+    };
+
+    const mesaSelect = document.getElementById('mesa-select');
+    const personaWrapper = document.getElementById('persona-wrapper');
+    const personaSelect = document.getElementById('persona-select');
+    const catPillEl = document.getElementById('cat-pill');
+    const retoBox = document.getElementById('reto-box');
+    const retoNombre = document.getElementById('reto-nombre');
+    const retoTitulo = document.getElementById('reto-titulo');
+    const retoCuerpo = document.getElementById('reto-cuerpo');
+
+    // Cargar las 23 mesas en el primer selector
+    Object.keys(datosMesas).forEach((id) => {
+      const opt = document.createElement('option');
+      opt.value = id;
+      opt.textContent = datosMesas[id].etiqueta;
+      mesaSelect.appendChild(opt);
+    });
+
+    // Evento al seleccionar mesa
+    mesaSelect.addEventListener('change', (e) => {
+      const mesaId = e.target.value;
+      retoBox.style.display = 'none';
+      personaSelect.innerHTML = '<option value="">-- Selecciona tu nombre --</option>';
+
+      if (mesaId && datosMesas[mesaId]) {
+        const mesa = datosMesas[mesaId];
+
+        // Inserta distintivo de categoría
+        catPillEl.innerHTML = `<span class="badge-cat badge-${mesa.tipo}">${mesa.categoria}</span>`;
+
+        // Llenar nombres de los invitados de esa mesa
+        mesa.personas.forEach((p, idx) => {
+          const opt = document.createElement('option');
+          opt.value = idx;
+          opt.textContent = p.nombre;
+          personaSelect.appendChild(opt);
+        });
+
+        personaWrapper.style.display = 'block';
+      } else {
+        personaWrapper.style.display = 'none';
+        catPillEl.innerHTML = '';
+      }
+    });
+
+    // Evento al seleccionar persona
+    personaSelect.addEventListener('change', (e) => {
+      const mesaId = mesaSelect.value;
+      const personaIdx = e.target.value;
+
+      if (mesaId && personaIdx !== "") {
+        const persona = datosMesas[mesaId].personas[personaIdx];
+        retoNombre.textContent = persona.nombre;
+        retoTitulo.textContent = persona.titulo;
+        retoCuerpo.textContent = persona.reto;
+        retoBox.style.display = 'block';
+      } else {
+        retoBox.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
